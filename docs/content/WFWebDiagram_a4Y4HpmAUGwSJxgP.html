@@ -1,0 +1,489 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Web Wireframe - Usuario incorrecto</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initWireframeDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		SENA Attendance	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Web Wireframe - Usuario incorrecto		</span>
+<a onclick="javascript: showVpLink('SENA_Attendance.vpp://diagram/a4Y4HpmAUGwSJxgP', 'Usuario incorrecto\nSENA_Attendance.vpp://diagram/a4Y4HpmAUGwSJxgP', 'Usuario incorrecto', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="auto" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;">
+			<tr>
+				<td>
+<a href="javascript:showWireframeStatesDialog()"><span class="TableContent ItemLink">Show State Overview</span></a>				</td>
+				<td width="10px">
+				</td>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0" id="selectShapeG4Y4HpmAUGwSJxgR">
+						<tr>
+							<td>
+<span class="TableContent">Jump to:</span>								<select class="TableContent" onChange="scrollWin('diagramG4Y4HpmAUGwSJxgR', this.value);hideLinkPopup();showSpotLight('diagramG4Y4HpmAUGwSJxgR', this.value)">
+<option value="">Please select an element</option>
+<option value="shape|2.0|2.0|1024.0|768.0|#G4Y4HpmAUGwSJxgR;T4Y4HpmAUGwSJxgS|#G4Y4HpmAUGwSJxgR;T4Y4HpmAUGwSJxgS|T4Y4HpmAUGwSJxgS" id="optionT4Y4HpmAUGwSJxgS">Web Browser : Browser</option>
+<option value="shape|320.0|119.0|384.0|584.0|#G4Y4HpmAUGwSJxgR;3nU4HpmAUGwSJxg0|#G4Y4HpmAUGwSJxgR;3nU4HpmAUGwSJxg0|3nU4HpmAUGwSJxg0" id="option3nU4HpmAUGwSJxg0">Rectángulo : Rectangle</option>
+<option value="shape|385.0|294.0|255.0|35.0|#G4Y4HpmAUGwSJxgR;8XU4HpmAUGwSJxhs|#G4Y4HpmAUGwSJxgR;8XU4HpmAUGwSJxhs|8XU4HpmAUGwSJxhs" id="option8XU4HpmAUGwSJxhs">Usuario o contraseña incorrecta : Label</option>
+<option value="shape|389.0|412.0|155.0|33.0|#G4Y4HpmAUGwSJxgR;vnU4HpmAUGwSJxg2|#G4Y4HpmAUGwSJxgR;vnU4HpmAUGwSJxg2|vnU4HpmAUGwSJxg2" id="optionvnU4HpmAUGwSJxg2">No. Documento: : Label</option>
+<option value="shape|387.0|453.0|253.0|44.0|#G4Y4HpmAUGwSJxgR;_nU4HpmAUGwSJxg6|#G4Y4HpmAUGwSJxgR;_nU4HpmAUGwSJxg6|_nU4HpmAUGwSJxg6" id="option_nU4HpmAUGwSJxg6">Campo de Texto : Text Field</option>
+<option value="shape|389.0|507.0|126.0|33.0|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxg9|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxg9|gXU4HpmAUGwSJxg9" id="optiongXU4HpmAUGwSJxg9">Contraseña: : Label</option>
+<option value="shape|387.0|547.0|253.0|45.0|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhB|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhB|gXU4HpmAUGwSJxhB" id="optiongXU4HpmAUGwSJxhB">Campo de Texto : Text Field</option>
+<option value="shape|540.0|592.0|120.0|16.0|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhE|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhE|gXU4HpmAUGwSJxhE" id="optiongXU4HpmAUGwSJxhE">¿Olvidó su contraseña? : Label</option>
+<option value="shape|455.0|623.0|122.0|43.0|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhI|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhI|gXU4HpmAUGwSJxhI" id="optiongXU4HpmAUGwSJxhI">Ingresar : Button</option>
+<option value="shape|417.0|247.0|193.0|53.0|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhL|#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhL|gXU4HpmAUGwSJxhL" id="optiongXU4HpmAUGwSJxhL">Inicie sesión : Label</option>
+<option value="shape|466.0|147.0|100.0|100.0|#G4Y4HpmAUGwSJxgR;4XU4HpmAUGwSJxhP|#G4Y4HpmAUGwSJxgR;4XU4HpmAUGwSJxhP|4XU4HpmAUGwSJxhP" id="option4XU4HpmAUGwSJxhP">Image : Image</option>
+<option value="shape|586.0|679.0|60.0|23.0|#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhS|#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhS|kXU4HpmAUGwSJxhS" id="optionkXU4HpmAUGwSJxhS">Registrate : Label</option>
+<option value="shape|389.0|679.0|195.0|23.0|#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhW|#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhW|kXU4HpmAUGwSJxhW" id="optionkXU4HpmAUGwSJxhW">¿Eres aprendiz y no tienes cuenta? : Label</option>
+<option value="shape|387.0|359.0|253.0|45.0|#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhe|#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhe|sXU4HpmAUGwSJxhe" id="optionsXU4HpmAUGwSJxhe">Campo de Texto : Text Field</option>
+<option value="shape|615.0|378.0|10.0|10.0|#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhg|#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhg|sXU4HpmAUGwSJxhg" id="optionsXU4HpmAUGwSJxhg">Polígono : Polygon</option>
+<option value="shape|389.0|319.0|161.0|33.0|#G4Y4HpmAUGwSJxgR;0XU4HpmAUGwSJxha|#G4Y4HpmAUGwSJxgR;0XU4HpmAUGwSJxha|0XU4HpmAUGwSJxha" id="option0XU4HpmAUGwSJxha">Tipo documento: : Label</option>
+</select>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<span data-value="G4Y4HpmAUGwSJxgR" style="display: none;" id="defaultState">
+		</span>
+		<span data-value="Web Wireframe - Usuario incorrecto - Muestra mensaje de error &#x22;Usuario o contrase&#xf1;a incorrecta&#x22;" style="display: none;" id="defaultPageTitleText">
+		</span>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagramG4Y4HpmAUGwSJxgR" src="../images/Usuario_incorrecto_Muestra_mensaje_de_error_Usuario_o_contrasea_incorrecta.png" usemap="#diagramG4Y4HpmAUGwSJxgR_map" class="Image" width="1030" height="774"/>
+					<map name="diagramG4Y4HpmAUGwSJxgR_map">
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="389, 319, 550, 352" coords2="389, 319, 550, 352" shape="rect" alt="Tipo documento::Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_0XU4HpmAUGwSJxha" href="#G4Y4HpmAUGwSJxgR;0XU4HpmAUGwSJxha" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="615, 378, 625, 388" coords2="615, 378, 625, 388" shape="rect" alt="Polígono:Polygon" id="areadiagramG4Y4HpmAUGwSJxgR_map_sXU4HpmAUGwSJxhg" href="#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhg" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="387, 359, 640, 404" coords2="387, 359, 640, 404" shape="rect" alt="Campo de Texto:Text Field" id="areadiagramG4Y4HpmAUGwSJxgR_map_sXU4HpmAUGwSJxhe" href="#G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhe" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="389, 679, 584, 702" coords2="389, 679, 584, 702" shape="rect" alt="¿Eres aprendiz y no tienes cuenta?:Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_kXU4HpmAUGwSJxhW" href="#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhW" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="586, 679, 646, 702" coords2="586, 679, 646, 702" shape="rect" alt="Registrate:Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_kXU4HpmAUGwSJxhS" href="#G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhS" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="466, 147, 566, 247" coords2="466, 147, 566, 247" shape="rect" alt="Image:Image" id="areadiagramG4Y4HpmAUGwSJxgR_map_4XU4HpmAUGwSJxhP" href="#G4Y4HpmAUGwSJxgR;4XU4HpmAUGwSJxhP" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="417, 247, 610, 300" coords2="417, 247, 610, 300" shape="rect" alt="Inicie sesión:Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_gXU4HpmAUGwSJxhL" href="#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhL" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="455, 623, 577, 666" coords2="455, 623, 577, 666" shape="rect" alt="Ingresar:Button" id="areadiagramG4Y4HpmAUGwSJxgR_map_gXU4HpmAUGwSJxhI" href="#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhI" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="540, 592, 660, 608" coords2="540, 592, 660, 608" shape="rect" alt="¿Olvidó su contraseña?:Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_gXU4HpmAUGwSJxhE" href="#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhE" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="387, 547, 640, 592" coords2="387, 547, 640, 592" shape="rect" alt="Campo de Texto:Text Field" id="areadiagramG4Y4HpmAUGwSJxgR_map_gXU4HpmAUGwSJxhB" href="#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhB" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="389, 507, 515, 540" coords2="389, 507, 515, 540" shape="rect" alt="Contraseña::Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_gXU4HpmAUGwSJxg9" href="#G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxg9" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="387, 453, 640, 497" coords2="387, 453, 640, 497" shape="rect" alt="Campo de Texto:Text Field" id="areadiagramG4Y4HpmAUGwSJxgR_map__nU4HpmAUGwSJxg6" href="#G4Y4HpmAUGwSJxgR;_nU4HpmAUGwSJxg6" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="389, 412, 544, 445" coords2="389, 412, 544, 445" shape="rect" alt="No. Documento::Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_vnU4HpmAUGwSJxg2" href="#G4Y4HpmAUGwSJxgR;vnU4HpmAUGwSJxg2" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="385, 294, 640, 329" coords2="385, 294, 640, 329" shape="rect" alt="Usuario o contraseña incorrecta:Label" id="areadiagramG4Y4HpmAUGwSJxgR_map_8XU4HpmAUGwSJxhs" href="#G4Y4HpmAUGwSJxgR;8XU4HpmAUGwSJxhs" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="320, 119, 704, 703" coords2="320, 119, 704, 703" shape="rect" alt="Rectángulo:Rectangle" id="areadiagramG4Y4HpmAUGwSJxgR_map_3nU4HpmAUGwSJxg0" href="#G4Y4HpmAUGwSJxgR;3nU4HpmAUGwSJxg0" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagramG4Y4HpmAUGwSJxgR" coords="2, 2, 1026, 770" coords2="2, 2, 1026, 770" shape="rect" alt="Web Browser:Browser" id="areadiagramG4Y4HpmAUGwSJxgR_map_T4Y4HpmAUGwSJxgS" href="#G4Y4HpmAUGwSJxgR;T4Y4HpmAUGwSJxgS" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0" id="elementsG4Y4HpmAUGwSJxgR">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Display Text</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Browser.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Browser.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Web Browser : Browser</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;T4Y4HpmAUGwSJxgS"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/RoundedRectangle.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/RoundedRectangle.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Rectángulo : Rectangle</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;3nU4HpmAUGwSJxg0"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Usuario o contraseña incorrecta : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;8XU4HpmAUGwSJxhs"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">No. Documento: : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;vnU4HpmAUGwSJxg2"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/TextField.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/TextField.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Campo de Texto : Text Field</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;_nU4HpmAUGwSJxg6"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Contraseña: : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxg9"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/TextField.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/TextField.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Campo de Texto : Text Field</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhB"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">¿Olvidó su contraseña? : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhE"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Button.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Button.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Ingresar : Button</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhI"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Inicie sesión : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;gXU4HpmAUGwSJxhL"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Image.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Image.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Image : Image</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;4XU4HpmAUGwSJxhP"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Registrate : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhS"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">¿Eres aprendiz y no tienes cuenta? : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;kXU4HpmAUGwSJxhW"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/TextField.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/TextField.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Campo de Texto : Text Field</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhe"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Polygon.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Polygon.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Polígono : Polygon</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;sXU4HpmAUGwSJxhg"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Label.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Label.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span class="TableContent">Tipo documento: : Label</span>				</span>
+<a name="G4Y4HpmAUGwSJxgR;0XU4HpmAUGwSJxha"></a>			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="width:370px; height:255px; position: fixed; _position: absolute; overflow: scroll; background-color: #F0F0F0; top: 100px; left: 100px; padding: 10px; display: none;" id="wireframeStatesDialog">
+		<span data-value="Web Wireframe - Usuario incorrecto - Muestra mensaje de error &#x22;Usuario o contrase&#xf1;a incorrecta&#x22;" style="display: none;" id="pageTitleTextG4Y4HpmAUGwSJxgR">
+		</span>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style=" left: 30; top: 30; width: 340; height: 225; position: absolute; z-index: 10; background: white; border: black 3px solid; padding: 15px 20px 10px 20px; text-align: center;">
+			<tr>
+				<td>
+<a href="javascript:okWireframeStatesDialog('selectShapeG4Y4HpmAUGwSJxgR', 'diagramG4Y4HpmAUGwSJxgR', 'none', 'elementsG4Y4HpmAUGwSJxgR', 'PageTitleText', 'pageTitleTextG4Y4HpmAUGwSJxgR')"><img src="../images/Usuario_incorrecto_Muestra_mensaje_de_error_Usuario_o_contrasea_incorrecta_preview.png" class="Image" style=" width: 266; height: 200; border: none !important;"/>
+</a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:okWireframeStatesDialog('selectShapeG4Y4HpmAUGwSJxgR', 'diagramG4Y4HpmAUGwSJxgR', 'none', 'elementsG4Y4HpmAUGwSJxgR', 'PageTitleText', 'pageTitleTextG4Y4HpmAUGwSJxgR')"><span style="color: black !important" class="TableContent ItemLink">Muestra mensaje de error "Usuario o contraseña incorrecta"</span></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		SENA Attendance	</div>
+</body>
+</html>

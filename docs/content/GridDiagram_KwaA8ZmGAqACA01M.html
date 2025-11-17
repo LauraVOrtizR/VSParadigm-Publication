@@ -1,0 +1,310 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Grid - Actors Grid</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		SENA Attendance	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Model_EwaA8ZmGAqACA01L.html" class="PageParentTitle">Actors : Model</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Grid - Actors Grid		</span>
+<a onclick="javascript: showVpLink('SENA_Attendance.vpp://diagram/KwaA8ZmGAqACA01M', 'Actors Grid\nSENA_Attendance.vpp://diagram/KwaA8ZmGAqACA01M', 'Actors Grid', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+Configuration			</td>
+		</tr>
+		<tr>
+			<td class="TableCellSpaceHolder5PxTall">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="25%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Value</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Model Element</span>			</td>
+			<td>
+			</td>
+			<td>
+				<div class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Actor.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Actor.png'); background-repeat: no-repeat; background-size: contain;">
+					</div>
+					&nbsp; <span style="line-height: 18px">Actor</span>				</div>
+			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Scope</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Project</span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+<span class="TableContent">Includes Referenced Projects</span>			</td>
+			<td>
+			</td>
+			<td>
+<span class="TableContent">false</span>			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+Actors			</td>
+		</tr>
+		<tr>
+			<td class="TableCellSpaceHolder5PxTall">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="3" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="3" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td width="33%" style="padding: 5px 10px;">
+<span class="TableHeaderText">ID</span>			</td>
+			<td width="33%" style="padding: 5px 10px;">
+<span class="TableHeaderText">Name</span>			</td>
+			<td width="33%" style="padding: 5px 10px;">
+<span class="TableHeaderText">Related Use Cases</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="3" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr id="modelSelectionEaaTCpmGAqACAghS" class="TableRow1">
+			<td style="padding: 5px 10px;">
+<a name="EaaTCpmGAqACAghS"></a><span class="TableContent">AC02</span>			</td>
+			<td style="padding: 5px 10px;">
+<a name="EaaTCpmGAqACAghS"></a><a href="Actor_EaaTCpmGAqACAghS.html" class="TableContent"><span class="TableContent">Anónimo</span></a>			</td>
+			<td style="padding: 5px 10px;">
+<a name="EaaTCpmGAqACAghS"></a>				<span class="TableContent">
+<a href="UseCase_AF1rCpmGAqACAgpM.html" class="ItemLink">Registrarme</a>				</span>
+			</td>
+		</tr>
+		<tr id="modelSelectionNMbTCpmGAqACAgh7" class="TableRow2">
+			<td style="padding: 5px 10px;">
+<a name="NMbTCpmGAqACAgh7"></a><span class="TableContent">AC05</span>			</td>
+			<td style="padding: 5px 10px;">
+<a name="NMbTCpmGAqACAgh7"></a><a href="Actor_NMbTCpmGAqACAgh7.html" class="TableContent"><span class="TableContent">Administrador</span></a>			</td>
+			<td style="padding: 5px 10px;">
+<a name="NMbTCpmGAqACAgh7"></a>				<span class="TableContent">
+<a href="UseCase_R4nLCpmGAqACAgnm.html" class="ItemLink">Gestionar perfiles</a>, <a href="UseCase_Tt5HzpmGAqESAQ2S.html" class="ItemLink">Gestionar programas de aprendizaje</a>				</span>
+			</td>
+		</tr>
+		<tr id="modelSelectionSb9TCpmGAqACAghy" class="TableRow1">
+			<td style="padding: 5px 10px;">
+<a name="Sb9TCpmGAqACAghy"></a><span class="TableContent">AC04</span>			</td>
+			<td style="padding: 5px 10px;">
+<a name="Sb9TCpmGAqACAghy"></a><a href="Actor_Sb9TCpmGAqACAghy.html" class="TableContent"><span class="TableContent">Instructor</span></a>			</td>
+			<td style="padding: 5px 10px;">
+<a name="Sb9TCpmGAqACAghy"></a>				<span class="TableContent">
+<a href="UseCase_YsYrCpmGAqACAgoA.html" class="ItemLink">Gestionar
+justificaciones</a>, <a href="UseCase_WsfzCpmGAqACAglA.html" class="ItemLink">Gestionar 
+aprendices</a>, <a href="UseCase_8WsLCpmGAqACAgl2.html" class="ItemLink">Gestionar fichas</a>, <a href="UseCase_9o6LCpmGAqACAgmI.html" class="ItemLink">Gestionar listas de
+asistencia</a>				</span>
+			</td>
+		</tr>
+		<tr id="modelSelectionYl1TCpmGAqACAghh" class="TableRow2">
+			<td style="padding: 5px 10px;">
+<a name="Yl1TCpmGAqACAghh"></a><span class="TableContent">AC03</span>			</td>
+			<td style="padding: 5px 10px;">
+<a name="Yl1TCpmGAqACAghh"></a><a href="Actor_Yl1TCpmGAqACAghh.html" class="TableContent"><span class="TableContent">Aprendiz</span></a>			</td>
+			<td style="padding: 5px 10px;">
+<a name="Yl1TCpmGAqACAghh"></a>				<span class="TableContent">
+<a href="UseCase_m2CrCpmGAqACAgoS.html" class="ItemLink">Gestionar asistencia</a>				</span>
+			</td>
+		</tr>
+		<tr id="modelSelectionqLSTCpmGAqACAghJ" class="TableRow1">
+			<td style="padding: 5px 10px;">
+<a name="qLSTCpmGAqACAghJ"></a><span class="TableContent">AC01</span>			</td>
+			<td style="padding: 5px 10px;">
+<a name="qLSTCpmGAqACAghJ"></a><a href="Actor_qLSTCpmGAqACAghJ.html" class="TableContent"><span class="TableContent">Usuario</span></a>			</td>
+			<td style="padding: 5px 10px;">
+<a name="qLSTCpmGAqACAghJ"></a>				<span class="TableContent">
+<a href="UseCase_VMy7CpmGAqACAguo.html" class="ItemLink">Iniciar sesión</a>, <a href="UseCase_ikE7CpmGAqACAguW.html" class="ItemLink">Modificar Datos</a>				</span>
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<p>
+	</p>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		SENA Attendance	</div>
+</body>
+</html>
