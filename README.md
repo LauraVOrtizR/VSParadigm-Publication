@@ -1,1 +1,1 @@
-# VSParadigm-Publication# VSParadigm-Publication
+# VSParadigm-Publication
